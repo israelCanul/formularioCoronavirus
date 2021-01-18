@@ -67,6 +67,7 @@ p {
 }
 .row.guest {
   background-color: rgba(0, 70, 127, 0.5);
+  flex-direction: row;
 }
 .row {
   display: flex;

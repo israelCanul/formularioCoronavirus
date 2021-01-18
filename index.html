@@ -76,43 +76,7 @@
               </div>
               <div class="row">
                 <div class="dataForm">
-                  <label for=""
-                    >Full name
-                    <small> (*as it appears on your passport)</small></label
-                  >
-                  <input type="text" class="name" name="name" placeholder="" />
-                  <small class="error" style="display: none"
-                    >Field Required</small
-                  >
-                </div>
-                <div class="dataForm">
-                  <label for="">Email</label>
-                  <input
-                    name="email"
-                    class="email"
-                    type="email"
-                    placeholder=""
-                  />
-                  <small class="error" style="display: none"
-                    >Field Required</small
-                  >
-                </div>
-              </div>
-              <div class="row">
-                <div class="dataForm">
-                  <label for="">Date of Birth</label>
-                  <input
-                    type="text"
-                    name="birthdate"
-                    class="caleran birthdate"
-                    placeholder=""
-                  />
-                  <small class="error" style="display: none"
-                    >Field Required</small
-                  >
-                </div>
-                <div class="dataForm">
-                  <label for="">Resort</label>
+                  <label for="">Resort *</label>
                   <select name="hotel" class="hotel" id="Resort">
                     <option value="" selected="">Select Resort</option>
                     <optgroup label="Cancun">
@@ -148,10 +112,48 @@
                     >Field Required</small
                   >
                 </div>
+                <div class="dataForm">
+                  <label for=""
+                    >Full name
+                    <small> (*as it appears on your passport)</small></label
+                  >
+                  <input type="text" class="name" name="name" placeholder="" />
+                  <small class="error" style="display: none"
+                    >Field Required</small
+                  >
+                </div>
               </div>
               <div class="row">
                 <div class="dataForm">
-                  <label for="">Type of test you need (please check one)</label>
+                  <label for="">Email *</label>
+                  <input
+                    name="email"
+                    class="email"
+                    type="email"
+                    placeholder=""
+                  />
+                  <small class="error" style="display: none"
+                    >Field Required</small
+                  >
+                </div>
+                <div class="dataForm">
+                  <label for="">Date of Birth *</label>
+                  <input
+                    type="text"
+                    name="birthdate"
+                    class="caleran birthdate"
+                    placeholder=""
+                  />
+                  <small class="error" style="display: none"
+                    >Field Required</small
+                  >
+                </div>
+              </div>
+              <div class="row">
+                <div class="dataForm">
+                  <label for=""
+                    >Type of test you need (please check one) *</label
+                  >
                   <div class="options">
                     <div class="option">
                       <input
@@ -159,29 +161,29 @@
                         checked
                         value="Antigen"
                         placeholder=""
-                        name="type"
-                        id="Antigen"
+                        name="type-0"
+                        id="Antigen-0"
                         class="type"
                       />
-                      <label for="Antigen">Antigen</label>
+                      <label for="Antigen-0">Antigen</label>
                     </div>
                     <div class="option">
                       <input
                         type="radio"
                         value="PCR"
-                        id="PCR"
-                        class="type"
+                        id="PCR-0"
+                        class="type-0"
                         placeholder=""
-                        name="type"
+                        name="type-0"
                       />
-                      <label for="PCR">PCR</label>
+                      <label for="PCR-0">PCR</label>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="dataForm">
-                  <label for="">Villa Number</label>
+                  <label for="">Villa Number *</label>
                   <input
                     type="text"
                     class="villa"
@@ -204,7 +206,7 @@
                   OR
                 </div>
                 <div class="dataForm">
-                  <label for="">Reservation Number</label>
+                  <label for="">Reservation Number *</label>
                   <input
                     type="text"
                     class="reservationNumber"
@@ -218,7 +220,7 @@
               </div>
               <div class="row">
                 <div class="dataForm">
-                  <label for="">Date of departure</label>
+                  <label for="">Date of departure *</label>
                   <input
                     type="text"
                     name="departure"
@@ -230,7 +232,7 @@
                   >
                 </div>
                 <div class="dataForm">
-                  <label for="">Flight time</label>
+                  <label for="">Flight time *</label>
                   <input
                     type="text"
                     class="flight"

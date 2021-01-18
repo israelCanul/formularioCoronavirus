@@ -55,7 +55,11 @@ $(function () {
         departure = $(item).find(".departure").val(),
         flight = $(item).find(".flight").val();
 
-      if ($(item).find("#Antigen").is(":checked")) {
+      if (
+        $(item)
+          .find("#Antigen-" + index)
+          .is(":checked")
+      ) {
         type = "Antigen";
       } else {
         type = "PCR";
@@ -209,22 +213,22 @@ $(function () {
               checked
               value="Antigen"
               placeholder=""
-              name="type"
-              id="Antigen"
+              name="type-${id}"
+              id="Antigen-${id}"
               class="type"
             />
-            <label for="Antigen">Antigen</label>
+            <label for="Antigen-${id}">Antigen</label>
           </div>
           <div class="option">
             <input
               type="radio"
               value="PCR"
-              id="PCR"
+              id="PCR-${id}"
               class="type"
               placeholder=""
-              name="type"
+              name="type-${id}"
             />
-            <label for="PCR">PCR</label>
+            <label for="PCR-${id}">PCR</label>
           </div>
         </div>
       </div>

@@ -21,20 +21,21 @@
         Villa: '.$value->villa.' 
         ReservationNumber: '.$value->reservation.' 
         Departure: '.$value->departure.'
+        FlightTime: '.$value->flight.'
         ';
     }
     
     
     $correo = 'citasroyalresorts@amerimedhospitals.com';
-    $correoP = 'icanul@royalresorts.com';
+    $correoP = 'acastrom@royalresorts.com';
     switch ($guests->guest[0]->resort) {
         case 'The Royal Haciendas':
             // echo "entro aqui RS";
-            $correoP = 'israel.canul@gmail.com';
+            $correoP = 'acastrom@royalresorts.com';
             $correo = 'citasroyalresorts@amerimedhospitals.com';
             break;
         default:
-        $correoP = 'icanul@royalresorts.com';
+        $correoP = 'acastrom@royalresorts.com';
         $correo = 'citasroyalresorts@amerimedhospitals.com';
             break;
     }

@@ -1,4 +1,28 @@
 $(function () {
+  const firebaseConfig = {
+    apiKey: "AIzaSyDBK2CTlFejLzvF-ENXYY5DPed4YuL3dtw",
+    authDomain: "covidformid.firebaseapp.com",
+    databaseURL: "https://covidformid-default-rtdb.firebaseio.com",
+    projectId: "covidformid",
+    storageBucket: "covidformid.appspot.com",
+    messagingSenderId: "722514151630",
+    appId: "1:722514151630:web:05e2eaea9d533b20cba89f",
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  var defaultDatabase = firebase.database();
+
+  var guests = [];
+
+  defaultDatabase
+    .ref("guests")
+    .once("value")
+    .then((snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        guests.push(childSnapshot.val());
+      });
+    });
+
   var id = 0;
   //   inicializamos caleran
   $(".caleran.birthdate").caleran({
@@ -44,10 +68,13 @@ $(function () {
     var persons = [];
     var errorForm = false;
     $.each(formularios, function (index, item) {
+      console.log(formularios);
+      console.log(item);
       var errorItem = false;
       var name = $(item).find(".name").val(),
         email = $(item).find(".email").val(),
         birthdate = $(item).find(".birthdate").val(),
+        passport = $(item).find(".passport").val(),
         resort = $("#guest-0").find(".hotel").val(),
         type = "Antigen",
         villa = $(item).find(".villa").val(),
@@ -67,25 +94,38 @@ $(function () {
       if (name != "") {
         $(item).find(".name").closest(".dataForm").find(".error").hide();
       } else {
+        console.log("hay error");
         errorItem = true;
         $(item).find(".name").closest(".dataForm").find(".error").show();
       }
       if (email != "") {
         $(item).find(".email").closest(".dataForm").find(".error").hide();
       } else {
+        console.log("hay error");
         errorItem = true;
         $(item).find(".email").closest(".dataForm").find(".error").show();
       }
       if (birthdate != "") {
         $(item).find(".birthdate").closest(".dataForm").find(".error").hide();
       } else {
+        console.log("hay error");
         errorItem = true;
         $(item).find(".birthdate").closest(".dataForm").find(".error").show();
       }
+      if (passport != "") {
+        $(item).find(".passport").closest(".dataForm").find(".error").hide();
+      } else {
+        console.log("hay error");
+        errorItem = true;
+        $(item).find(".passport").closest(".dataForm").find(".error").show();
+      }
       if (index == 0) {
+        console.log("Index 0");
         if (resort != "") {
+          console.log("No hay error index 0");
           $(item).find(".hotel").closest(".dataForm").find(".error").hide();
         } else {
+          console.log("hay error");
           errorItem = true;
           $(item).find(".hotel").closest(".dataForm").find(".error").show();
         }
@@ -93,10 +133,12 @@ $(function () {
       if (flight != "") {
         $(item).find(".flight").closest(".dataForm").find(".error").hide();
       } else {
+        console.log("hay error");
         errorItem = true;
         $(item).find(".flight").closest(".dataForm").find(".error").show();
       }
       if (reservation == "" && villa == "") {
+        console.log("hay error");
         errorItem = true;
         $(item)
           .find(".reservationNumber")
@@ -111,9 +153,11 @@ $(function () {
           .hide();
       }
       if (!errorItem) {
-        persons.push({
+        console.log("item armado y pusheado");
+        guests.push({
           name,
           email,
+          passport,
           birthdate,
           resort,
           type,
@@ -122,7 +166,19 @@ $(function () {
           departure,
           flight,
         });
+        // persons.push({
+        //   name,
+        //   email,
+        //   birthdate,
+        //   resort,
+        //   type,
+        //   villa,
+        //   reservation,
+        //   departure,
+        //   flight,
+        // });
       } else {
+        console.log("hay error");
         errorForm = true;
       }
     });
@@ -130,35 +186,53 @@ $(function () {
     if (!errorForm) {
       $("#submitbtn").hide();
       $("#loadingSection").show();
-      axios
-        .post(
-          "send.php",
-          { guest: persons },
-          { "Content-Type": "application/json" }
-        )
-        .then((response) => {
-          console.log(response);
-          if (response.status == 200) {
-            var data = response.data;
-            if (data.wmSendGmailEmailResponse) {
-              if (
-                data.wmSendGmailEmailResponse.wmSendGmailEmailResult == "True"
-              ) {
-                $("#ex1").modal();
-                $("#testForm")[0].reset();
-                $("#formSent").show();
-              }
-            }
-          }
-          $("#submitbtn").show();
-          $("#loadingSection").hide();
-        })
-        .catch((e) => {
-          // Podemos mostrar los errores en la consola
-          console.log(e);
-        });
+      defaultDatabase.ref("guests").set(guests, function () {
+        $("#ex1").modal();
+        $("#testForm")[0].reset();
+        $("#formSent").show();
+        $("#submitbtn").show();
+        $("#loadingSection").hide();
+      });
+
+      // axios
+      //   .post(
+      //     "send.php",
+      //     { guest: persons },
+      //     { "Content-Type": "application/json" }
+      //   )
+      //   .then((response) => {
+      //     console.log(response);
+      //     if (response.status == 200) {
+      //       var data = response.data;
+      //       if (data.wmSendGmailEmailResponse) {
+      //         if (
+      //           data.wmSendGmailEmailResponse.wmSendGmailEmailResult == "True"
+      //         ) {
+      //           $("#ex1").modal();
+      //           $("#testForm")[0].reset();
+      //           $("#formSent").show();
+      //         }
+      //       }
+      //     }
+      //     $("#submitbtn").show();
+      //     $("#loadingSection").hide();
+      //   })
+      //   .catch((e) => {
+      //     // Podemos mostrar los errores en la consola
+      //     console.log(e);
+      //   });
     }
   });
+  function dec2hex(dec) {
+    return dec.toString(16).padStart(2, "0");
+  }
+
+  // generateId :: Integer -> String
+  function generateId(len) {
+    var arr = new Uint8Array((len || 40) / 2);
+    window.crypto.getRandomValues(arr);
+    return Array.from(arr, dec2hex).join("");
+  }
   function addPerson() {
     id = id + 1;
     var template = `<div id="guest-${id}" class="formulario_formulario" data-id="${id}">
@@ -196,6 +270,18 @@ $(function () {
           type="text"
           name="birthdate"
           class="caleran birthdate"
+          placeholder=""
+        />
+        <small class="error" style="display: none"
+          >Field Required</small
+        >
+      </div>
+      <div class="dataForm">
+        <label for="">Passport *</label>
+        <input
+          type="text"
+          name="passport"
+          class="passport"
           placeholder=""
         />
         <small class="error" style="display: none"

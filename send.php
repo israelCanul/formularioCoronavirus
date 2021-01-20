@@ -1,8 +1,12 @@
 <?php 
+
+return true;
+    exit(0);
+
    header('Access-Control-Allow-Origin: *'); 
    header('Content-Type: application/json');
 
-    $isDev = true;
+    $isDev = false;
 
     $JSONData = file_get_contents("php://input");
     $guests = json_decode($JSONData);
@@ -27,12 +31,13 @@
     
     
     $correo = 'citasroyalresorts@amerimedhospitals.com';
+    $correoCC = 'media@royalresorts.com';
     $correoP = 'acastrom@royalresorts.com';
     switch ($guests->guest[0]->resort) {
         case 'The Royal Haciendas':
             // echo "entro aqui RS";
             $correoP = 'acastrom@royalresorts.com';
-            $correo = 'citasroyalresorts@amerimedhospitals.com';
+            $correo = 'citasroyalhaciendas@amerimedhospitals.com';
             break;
         default:
         $correoP = 'acastrom@royalresorts.com';
@@ -41,7 +46,12 @@
     }
     if($isDev){
         $correo =  $correoP;
+        $correoCC = $correoP;
     }
+
+    // var_dump($correo);
+    // var_dump($correoCC);
+    // exit(0);
 
        $soapUrl = "https://wprdinternet.servicesrr.com:444/generalservice/Generalservice.asmx?op=wmSendGmailEmail"; // asmx URL of WSDL
 		$xml_post_string = '<?xml version="1.0" encoding="utf-8"?>
@@ -54,9 +64,9 @@
             <strEmailTo>
                 <string>'.$correo.'</string>	
             </strEmailTo>
-                <strEmailCc>
-                    <string>'.$correo.'</string>	
-                </strEmailCc>
+            <strEmailCc>
+                <string>'.$correoCC.'</string>	
+            </strEmailCc>
             <strEmailBcc>
             </strEmailBcc>
             <strSubject>RESERVATION - COVID-19 Test</strSubject>

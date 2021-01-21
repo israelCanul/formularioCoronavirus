@@ -1,3 +1,13 @@
+body {
+  margin: 0px;
+}
+.top-menu {
+  margin: 2px 5px;
+}
+.top-menu a {
+  margin: 0px 5px;
+  text-decoration: none;
+}
 footer,
 header {
   background: rgba(0, 70, 127, 1);
@@ -150,6 +160,9 @@ input[type="submit"] {
 }
 
 @media only screen and (min-width: 767px) {
+  .top-menu {
+    padding: 0px calc(50% - 350px);
+  }
   .main {
     width: 700px;
     max-width: 700px;

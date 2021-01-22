@@ -3,10 +3,12 @@ body {
 }
 .top-menu {
   margin: 2px 5px;
+  text-align: right;
 }
 .top-menu a {
   margin: 0px 5px;
   text-decoration: none;
+  font-family: "Open Sans", sans-serif;
 }
 footer,
 header {

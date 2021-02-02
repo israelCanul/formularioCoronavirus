@@ -14,6 +14,11 @@ $(function () {
 
   var guests = [];
 
+  var formatdate = "MM-DD-YYYY";
+  if (document.documentElement.lang == "es") {
+    formatdate = "DD-MM-YYYY";
+  }
+
   defaultDatabase
     .ref("guests")
     .once("value")
@@ -30,7 +35,7 @@ $(function () {
     showFooter: false,
     singleDate: true,
     calendarCount: 1,
-    format: "DD-MM-YYYY",
+    format: formatdate,
     autoCloseOnSelect: true,
   });
   $(".caleran.departure").caleran({
@@ -39,7 +44,7 @@ $(function () {
     showFooter: false,
     singleDate: true,
     calendarCount: 1,
-    format: "DD-MM-YYYY",
+    format: formatdate,
     autoCloseOnSelect: true,
   });
   $(".flight").timepicker({
@@ -85,6 +90,9 @@ $(function () {
         reservation = $(item).find(".reservationNumber").val(),
         departure = $(item).find(".departure").val(),
         flight = $(item).find(".flight").val();
+
+      birthdate = new moment(birthdate, formatdate).format("DD-MM-YYYY");
+      departure = new moment(departure, formatdate).format("DD-MM-YYYY");
 
       if (
         $(item)
@@ -190,6 +198,9 @@ $(function () {
     if (!errorForm) {
       $("#submitbtn").hide();
       $("#loadingSection").show();
+
+      // console.log(guests);
+
       defaultDatabase.ref("guests").set(guests, function () {
         $("#ex1").modal();
         $("#testForm")[0].reset();
@@ -198,33 +209,33 @@ $(function () {
         $("#loadingSection").hide();
       });
 
-      // axios
-      //   .post(
-      //     "send.php",
-      //     { guest: persons },
-      //     { "Content-Type": "application/json" }
-      //   )
-      //   .then((response) => {
-      //     console.log(response);
-      //     if (response.status == 200) {
-      //       var data = response.data;
-      //       if (data.wmSendGmailEmailResponse) {
-      //         if (
-      //           data.wmSendGmailEmailResponse.wmSendGmailEmailResult == "True"
-      //         ) {
-      //           $("#ex1").modal();
-      //           $("#testForm")[0].reset();
-      //           $("#formSent").show();
-      //         }
-      //       }
-      //     }
-      //     $("#submitbtn").show();
-      //     $("#loadingSection").hide();
-      //   })
-      //   .catch((e) => {
-      //     // Podemos mostrar los errores en la consola
-      //     console.log(e);
-      //   });
+      axios
+        .post(
+          "send.php",
+          { guest: persons },
+          { "Content-Type": "application/json" }
+        )
+        .then((response) => {
+          console.log(response);
+          if (response.status == 200) {
+            var data = response.data;
+            if (data.wmSendGmailEmailResponse) {
+              if (
+                data.wmSendGmailEmailResponse.wmSendGmailEmailResult == "True"
+              ) {
+                $("#ex1").modal();
+                $("#testForm")[0].reset();
+                $("#formSent").show();
+              }
+            }
+          }
+          $("#submitbtn").show();
+          $("#loadingSection").hide();
+        })
+        .catch((e) => {
+          // Podemos mostrar los errores en la consola
+          console.log(e);
+        });
     }
   });
   function dec2hex(dec) {
@@ -393,7 +404,7 @@ $(function () {
       showFooter: false,
       singleDate: true,
       calendarCount: 1,
-      format: "DD-MM-YYYY",
+      format: formatdate,
       autoCloseOnSelect: true,
     });
     $(`#guest-${id} .caleran.departure`).caleran({
@@ -402,7 +413,7 @@ $(function () {
       showFooter: false,
       singleDate: true,
       calendarCount: 1,
-      format: "DD-MM-YYYY",
+      format: formatdate,
       autoCloseOnSelect: true,
     });
     $(`#guest-${id} .close`).on("click", function (e) {
@@ -576,7 +587,7 @@ $(function () {
       showFooter: false,
       singleDate: true,
       calendarCount: 1,
-      format: "DD-MM-YYYY",
+      format: formatdate,
       autoCloseOnSelect: true,
     });
     $(`#guest-${id} .caleran.departure`).caleran({
@@ -585,7 +596,7 @@ $(function () {
       showFooter: false,
       singleDate: true,
       calendarCount: 1,
-      format: "DD-MM-YYYY",
+      format: formatdate,
       autoCloseOnSelect: true,
     });
     $(`#guest-${id} .close`).on("click", function (e) {

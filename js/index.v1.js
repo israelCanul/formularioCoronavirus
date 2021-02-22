@@ -1,32 +1,58 @@
 $(function () {
-  const firebaseConfig = {
-    apiKey: "AIzaSyDBK2CTlFejLzvF-ENXYY5DPed4YuL3dtw",
-    authDomain: "covidformid.firebaseapp.com",
-    databaseURL: "https://covidformid-default-rtdb.firebaseio.com",
-    projectId: "covidformid",
-    storageBucket: "covidformid.appspot.com",
-    messagingSenderId: "722514151630",
-    appId: "1:722514151630:web:05e2eaea9d533b20cba89f",
-  };
+  var isDev = false;
+
+  var submited = false;
+  $(window).bind("beforeunload", function () {
+    // console.log(submited);
+    // return submited ? "Do you really want to sssclose?" : null;
+    // return false;
+    if (submited == false) {
+      return null;
+    }
+  });
+  var firebaseConfig = null;
+  if (isDev) {
+    firebaseConfig = {
+      apiKey: "AIzaSyC19-uBX8Cfs-7cZmr3q9XVJZHLWMHVrdk",
+      authDomain: "royalresorts-13bf8.firebaseapp.com",
+      databaseURL: "https://royalresorts-13bf8-default-rtdb.firebaseio.com",
+      projectId: "royalresorts-13bf8",
+      storageBucket: "royalresorts-13bf8.appspot.com",
+      messagingSenderId: "393802238120",
+      appId: "1:393802238120:web:2e178c181701c7295b9a9d",
+    };
+  } else {
+    firebaseConfig = {
+      apiKey: "AIzaSyDBK2CTlFejLzvF-ENXYY5DPed4YuL3dtw",
+      authDomain: "covidformid.firebaseapp.com",
+      databaseURL: "https://covidformid-default-rtdb.firebaseio.com",
+      projectId: "covidformid",
+      storageBucket: "covidformid.appspot.com",
+      messagingSenderId: "722514151630",
+      appId: "1:722514151630:web:05e2eaea9d533b20cba89f",
+    };
+  }
+
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   var defaultDatabase = firebase.database();
-
   var guests = [];
+
+  // defaultDatabase
+  //   .ref("guests")
+  //   .once("value")
+  //   .then((snapshot) => {
+  //     snapshot.forEach((childSnapshot) => {
+  //       guests.push(childSnapshot.val());
+  //     });
+  //   });
+  // console.log(guests);
+  // return;
 
   var formatdate = "MM-DD-YYYY";
   if (document.documentElement.lang == "es") {
     formatdate = "DD-MM-YYYY";
   }
-
-  defaultDatabase
-    .ref("guests")
-    .once("value")
-    .then((snapshot) => {
-      snapshot.forEach((childSnapshot) => {
-        guests.push(childSnapshot.val());
-      });
-    });
 
   var id = 0;
   //   inicializamos caleran
@@ -56,7 +82,7 @@ $(function () {
   });
   $("#addPerson").on("click", function (e) {
     e.preventDefault();
-    if (navigator.language == "en-MX") {
+    if (document.documentElement.lang == "es") {
       addPersonEs();
     } else {
       addPerson();
@@ -69,11 +95,17 @@ $(function () {
     var idToRevome = $(this).data("id");
     $("#guest-" + idToRevome).remove();
   });
+
+  /***Agregamos el prevent close */
+
+  // window.onbeforeunload = (function () {
+  //   alert("GrrrR!!!");
+  //   return null;
+  // })();
   $("#testForm").on("submit", function (e) {
     e.preventDefault();
 
     var formularios = $(".formulario_formulario");
-
     var persons = [];
     var errorForm = false;
     $.each(formularios, function (index, item) {
@@ -165,7 +197,6 @@ $(function () {
           .hide();
       }
       if (!errorItem) {
-        console.log("item armado y pusheado");
         guests.push({
           name,
           email,
@@ -178,17 +209,19 @@ $(function () {
           departure,
           flight,
         });
-        // persons.push({
-        //   name,
-        //   email,
-        //   birthdate,
-        //   resort,
-        //   type,
-        //   villa,
-        //   reservation,
-        //   departure,
-        //   flight,
-        // });
+
+        persons.push({
+          name,
+          email,
+          passport,
+          birthdate,
+          resort,
+          type,
+          villa,
+          reservation,
+          departure,
+          flight,
+        });
       } else {
         console.log("hay error");
         errorForm = true;
@@ -200,33 +233,49 @@ $(function () {
       $("#loadingSection").show();
 
       // console.log(guests);
-
-      defaultDatabase.ref("guests").set(guests, function () {
-        $("#ex1").modal();
-        $("#testForm")[0].reset();
-        $("#formSent").show();
-        $("#submitbtn").show();
-        $("#loadingSection").hide();
+      submited = true;
+      guests.map(function (guest) {
+        var bd = defaultDatabase.ref("guests/");
+        var newGuest = bd.push();
+        newGuest.set({
+          name: guest.name,
+          email: guest.email,
+          passport: guest.passport,
+          birthdate: guest.birthdate,
+          resort: guest.resort,
+          type: guest.type,
+          villa: guest.villa,
+          reservation: guest.reservation,
+          departure: guest.departure,
+          flight: guest.flight,
+        });
       });
 
+      // defaultDatabase.ref("guests").set(guests, function () {
+      // $("#ex1").modal();
+      // $("#testForm")[0].reset();
+      // $("#formSent").show();
+      // $("#submitbtn").show();
+      // $("#loadingSection").hide();
+
+      /***ENVIO DE CORREO [INICIO] */
       axios
         .post(
           "send.php",
-          { guest: persons },
+          {
+            guest: persons[0],
+            count: persons.length,
+            language: document.documentElement.lang,
+          },
           { "Content-Type": "application/json" }
         )
         .then((response) => {
-          console.log(response);
           if (response.status == 200) {
             var data = response.data;
-            if (data.wmSendGmailEmailResponse) {
-              if (
-                data.wmSendGmailEmailResponse.wmSendGmailEmailResult == "True"
-              ) {
-                $("#ex1").modal();
-                $("#testForm")[0].reset();
-                $("#formSent").show();
-              }
+            if (data.code > 0) {
+              $("#ex1").modal();
+              $("#testForm")[0].reset();
+              $("#formSent").show();
             }
           }
           $("#submitbtn").show();
@@ -235,7 +284,13 @@ $(function () {
         .catch((e) => {
           // Podemos mostrar los errores en la consola
           console.log(e);
+          $("#submitbtn").show();
+          $("#loadingSection").hide();
+          $("#exError").modal();
         });
+
+      /***ENVIO DE CORREO [FINAL] */
+      // });
     }
   });
   function dec2hex(dec) {

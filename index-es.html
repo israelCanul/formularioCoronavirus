@@ -48,7 +48,7 @@
     </header>
     <div class="main">
       <h1 class="title">Reserve su prueba COVID-19</h1>
-      <p>
+      <p style="text-align: justify">
         <strong>
           Favor de llenar un formulario por cada persona en su grupo que
           requiere una prueba.
@@ -56,11 +56,14 @@
         <br />
         <br />
         Recibirá un email de parte del laboratorio, tan pronto sea posible,
-        confirmando la fecha y hora de su cita. Agradecemos su paciencia ya que
-        el laboratorio está teniendo un alto volumen de solicitudes y está
-        respondiendo por orden de fecha de salida
+        confirmando la fecha y hora de su cita. <br />
+        <strong>
+          Agradecemos su paciencia ya que el laboratorio está teniendo un alto
+          volumen de solicitudes y está respondiendo por orden de fecha de
+          salida
+        </strong>
       </p>
-      <p>
+      <p style="text-align: justify">
         <br />
         Información importante para su prueba: <br />
         &#8195;<strong>&#183;</strong> No coma o beba nada en las 2 horas
@@ -84,10 +87,12 @@
         Recepción o el servicio médico del resort.
       </p>
       <div class="formulario">
-        <p class="formulario_formulario_title">
+        <p class="formulario_formulario_title" style="text-align: justify">
           <strong
             >Llene un formulario por cada persona de su grupo que requiere una
-            prueba.
+            prueba. <br />
+            <br />
+            Recuerde presionar ENVIAR al finalizar.
           </strong>
         </p>
         <form action="" id="testForm">
@@ -309,7 +314,7 @@
                 id="submitbtn"
                 style="cursor: pointer"
                 type="submit"
-                value="Enviar"
+                value="Enviar >>"
               />
               <div
                 id="formSent"
@@ -470,6 +475,17 @@
         hora de su cita
       </p>
     </div>
+    <div id="exError" class="modal">
+      <p class="opensans" style="text-align: center">
+        <strong>Hubo un Error</strong>
+        <br />
+        <a
+          target="_blank"
+          href="https://webchat.visitroyalresorts.com/chat-sitio-royalresorts-es.html"
+          >Contáctenos</a
+        >
+      </p>
+    </div>
     <footer></footer>
     <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
@@ -490,6 +506,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/es.js"></script>
     <script src="js/caleran.min.js"></script>
-    <script src="js/index.js"></script>
+    <script src="js/index.v1.js"></script>
   </body>
 </html>

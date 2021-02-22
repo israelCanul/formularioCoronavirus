@@ -146,11 +146,16 @@ input[type="submit"] {
   width: 100%;
   max-width: 250px;
   margin-left: calc(50% - 125px);
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
+  background-color: rgba(0, 70, 127, 1);
+  color: white;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  text-transform: uppercase;
+  /* font-weight: 600; */
+  font-size: 18px;
 }
 .error {
   color: #ce1414;
@@ -180,5 +185,9 @@ input[type="submit"] {
   }
   header img {
     margin-left: calc(50% - 350px);
+  }
+  input[type="submit"] {
+    max-width: 350px;
+    margin-left: calc(50% - 175px);
   }
 }

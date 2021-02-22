@@ -1,29 +1,19 @@
 <?php 
+header('Access-Control-Allow-Origin: *'); 
+header('Content-Type: application/json');
+include 'funcionesSF.php';
 
-$isDev = false;
 
 $JSONData = file_get_contents("php://input");
-$guests = json_decode($JSONData);
+$params = json_decode($JSONData);
+
+if($params->language == "es"){
+    $correo = SendMessage(rand_string('30').$params->guest->passport, 'APIformcovidEs', $params->guest->email, array("count"=>$params->count, "language"=> 'es-MX', "name" => $params->guest->name ));
+} else {
+    $correo = SendMessage(rand_string('30').$params->guest->passport, 'APIformcovidEn', $params->guest->email, array("count"=>$params->count,"language"=> 'en-US', "name" => $params->guest->name ));
+}
 
 
-$message = '';
+echo json_encode(array("code"=>1, "result"=> "todo bien", "emailResponse" => $correo));
 
-    foreach ($guests->guest as $key => $value) {
-        
-        $message .= '
-        Guest #'.$key.'
-        FullName: '.$value->name.' 
-        Email: '.$value->email.' 
-        Birthdate: '.$value->birthdate.' 
-        Resort: '.$guests->guest[0]->resort.' 
-        TestType: '.$value->type.' 
-        Villa: '.$value->villa.' 
-        ReservationNumber: '.$value->reservation.' 
-        Departure: '.$value->departure.'
-        FlightTime: '.$value->flight.'
-        ';
-    }
-
-
-    echo $message;
 ?>

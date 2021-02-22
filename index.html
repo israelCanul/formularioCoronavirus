@@ -48,22 +48,24 @@
     </header>
     <div class="main">
       <h1 class="title">Reserve Your COVID-19 Test</h1>
-      <p>
+      <p style="text-align: justify">
         <strong>
           Please fill out one form for each member of your party requiring a
           test.</strong
         >
         <br />
         <br />
-        <strong
-          >You will receive an email from the laboratory confirming the day and
-          time of your appointment.
-        </strong>
 
-        We appreciate your patience as the lab is experiencing a high volume of
-        requests and is prioritizing by date of departure
+        You will receive an email from the laboratory confirming the day and
+        time of your appointment. <br />
+        <strong>
+          We appreciate your patience as the lab is experiencing a high volume
+          of requests and is prioritizing by date of departure. Please note that
+          you may receive your appointment confirmation after your arrival date
+          or on the week of your departure.
+        </strong>
       </p>
-      <p>
+      <p style="text-align: justify">
         <br />
         Important information to consider: <br />
         &#8195;<strong>&#183;</strong> Do not drink or eat anything 2 hour prior
@@ -101,11 +103,12 @@
         match your passport name.
       </p> -->
       <div class="formulario">
-        <p class="formulario_formulario_title">
+        <p class="formulario_formulario_title" style="text-align: justify">
           <strong
             >Please fill out one form for each member of your party requiring a
-            test.</strong
-          >
+            test. <br /><br />
+            Please remember to press SEND when you are finished.
+          </strong>
         </p>
         <form action="" id="testForm">
           <div class="guests">
@@ -328,7 +331,7 @@
                 id="submitbtn"
                 style="cursor: pointer"
                 type="submit"
-                value="Send"
+                value="Send >>"
               />
               <div
                 id="formSent"
@@ -489,6 +492,17 @@
         and time of your appointment
       </p>
     </div>
+    <div id="exError" class="modal">
+      <p class="opensans" style="text-align: center">
+        <strong>There was an Error</strong>
+        <br />
+        <a
+          target="_blank"
+          href="https://webchat.visitroyalresorts.com/chat-sitio-royalresorts-en.html"
+          >Contact Us</a
+        >
+      </p>
+    </div>
     <footer></footer>
     <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
@@ -507,6 +521,7 @@
     ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="js/caleran.min.js"></script>
-    <script src="js/index.js"></script>
+    <script src="js/index.v1.js"></script>
+    <script type="text/javascript"></script>
   </body>
 </html>

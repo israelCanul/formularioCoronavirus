@@ -24,7 +24,7 @@ footer {
 }
 header img {
   max-width: 100%;
-  width: 200px;
+  width: 100px;
   background-color: white;
   display: block;
 }
@@ -185,6 +185,7 @@ input[type="submit"] {
   }
   header img {
     margin-left: calc(50% - 350px);
+    width: 200px;
   }
   input[type="submit"] {
     max-width: 350px;

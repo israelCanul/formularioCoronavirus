@@ -38,17 +38,6 @@ $(function () {
   var defaultDatabase = firebase.database();
   var guests = [];
 
-  // defaultDatabase
-  //   .ref("guests")
-  //   .once("value")
-  //   .then((snapshot) => {
-  //     snapshot.forEach((childSnapshot) => {
-  //       guests.push(childSnapshot.val());
-  //     });
-  //   });
-  // console.log(guests);
-  // return;
-
   var formatdate = "MM-DD-YYYY";
   if (document.documentElement.lang == "es") {
     formatdate = "DD-MM-YYYY";
@@ -250,13 +239,6 @@ $(function () {
           flight: guest.flight,
         });
       });
-
-      // defaultDatabase.ref("guests").set(guests, function () {
-      // $("#ex1").modal();
-      // $("#testForm")[0].reset();
-      // $("#formSent").show();
-      // $("#submitbtn").show();
-      // $("#loadingSection").hide();
 
       /***ENVIO DE CORREO [INICIO] */
       axios
